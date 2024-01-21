@@ -48,13 +48,13 @@ class ChatCommand extends Command
         }
 
         $question = text(
-            label: 'What is your question for AI',
+            label: 'What is your question for AI ?',
             required: true
         );
 
         $this->handleQuestion($question);
 
-        while (!in_array($question = text('Do you want to respond?'), ['n', 'N', 'no', 'No', false])) {
+        while (!in_array($question = text('Do you want to respond ?'), ['n', 'N', 'no', 'No', false])) {
             $this->handleQuestion($question);
         }
 
