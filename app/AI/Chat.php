@@ -3,7 +3,7 @@
 namespace App\AI;
 
 use Exception;
-use Illuminate\Support\Facades\Http;
+use OpenAI\Laravel\Facades\OpenAI;
 
 class Chat
 {
@@ -43,23 +43,16 @@ class Chat
     {
         $this->push($message, self::ROLE_USER);
 
-        $response = Http::withToken(config('services.openai.secret'))
-            ->post(
-                config('services.openai.endpoint'),
-                [
-                    "model"    => self::MODEL,
-                    "messages" => $this->messages
-                ]
-            );
-
-        if (!$response->ok()) {
-            throw new Exception('Something went wrong');
-        }
-
-        $response = $response->json('choices.0.message.content');
+        $response = OpenAI::chat()->create(
+            [
+                'model'    => self::MODEL,
+                'messages' => $this->messages
+            ]
+        )->choices[0]->message->content;
 
         if (!$response) {
             throw new Exception('Something went wrong');
+
         }
 
         $this->push($response, self::ROLE_ASSISTANT);
