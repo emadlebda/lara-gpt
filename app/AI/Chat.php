@@ -4,6 +4,7 @@ namespace App\AI;
 
 use Exception;
 use OpenAI\Laravel\Facades\OpenAI;
+use Throwable;
 
 class Chat
 {
@@ -37,7 +38,7 @@ class Chat
     /**
      * @param string $message
      * @return string
-     * @throws Exception
+     * @throws Throwable
      */
     public function send(string $message): string
     {
@@ -52,7 +53,6 @@ class Chat
 
         if (!$response) {
             throw new Exception('Something went wrong');
-
         }
 
         $this->push($response, self::ROLE_ASSISTANT);
@@ -66,7 +66,7 @@ class Chat
      *
      * @param string $message
      * @return string
-     * @throws Exception
+     * @throws Throwable
      */
     public function replay(string $message): string
     {

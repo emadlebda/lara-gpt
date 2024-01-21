@@ -54,7 +54,8 @@ class ChatCommand extends Command
 
         $this->handleQuestion($question);
 
-        while (!in_array($question = text('Do you want to respond ?'), ['n', 'N', 'no', 'No', false])) {
+        $question = text('Do you want to respond ?');
+        while (!in_array($question, ['n', 'N', 'no', 'No', false])) {
             $this->handleQuestion($question);
         }
 
